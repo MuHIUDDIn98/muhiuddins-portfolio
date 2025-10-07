@@ -119,6 +119,149 @@ body {
 }
 
 /* =================================================================
+   3. ANIMATED GRADIENT BACKGROUND
+   ================================================================= */
+.gradient-bg {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  overflow: hidden;
+  background: linear-gradient(40deg, #0a0a0f, #12121a);
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+.gradients-container {
+  filter: url(#goo) blur(40px);
+  width: 100%;
+  height: 100%;
+}
+
+.g1,
+.g2,
+.g3,
+.g4,
+.g5 {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  mix-blend-mode: screen;
+}
+
+/* --- Your Requested Orb Colors --- */
+.g1 {
+    /* Purple with lower opacity to reduce whiteness */
+    background: radial-gradient(circle at center, rgba(139, 92, 246, 0.3) 0, rgba(139, 92, 246, 0) 50%) no-repeat;
+    animation: move1 18s infinite;
+}
+
+.g2 {
+    /* Blue with lower opacity */
+    background: radial-gradient(circle at center, rgba(37, 99, 235, 0.3) 0, rgba(37, 99, 235, 0) 50%) no-repeat;
+    animation: move2 20s infinite;
+}
+
+.g3 {
+    /* Near-Black orb to maintain depth */
+    background: radial-gradient(circle at center, rgba(10, 10, 15, 0.3) 0, rgba(10, 10, 15, 0) 50%) no-repeat;
+    animation: move3 16s infinite;
+}
+
+.g4 {
+    /* Purple with lower opacity */
+    background: radial-gradient(circle at center, rgba(139, 92, 246, 0.3) 0, rgba(139, 92, 246, 0) 50%) no-repeat;
+    animation: move4 22s infinite;
+}
+
+.g5 {
+    /* Changed to purple to emphasize the color */
+    background: radial-gradient(circle at center, rgba(139, 92, 246, 0.3) 0, rgba(139, 92, 246, 0) 50%) no-repeat;
+    animation: move5 19s infinite;
+}
+/* --- End of Orb Colors --- */
+
+@keyframes move1 {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  25% {
+    transform: translate(40vw, -30vh) scale(0.8);
+  }
+  50% {
+    transform: translate(-20vw, 50vh) scale(1.2);
+  }
+  75% {
+    transform: translate(30vw, 20vh) scale(0.9);
+  }
+}
+
+@keyframes move2 {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  25% {
+    transform: translate(-35vw, 25vh) scale(0.9);
+  }
+  50% {
+    transform: translate(45vw, -40vh) scale(1.1);
+  }
+  75% {
+    transform: translate(-15vw, -30vh) scale(0.7);
+  }
+}
+
+@keyframes move3 {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  25% {
+    transform: translate(25vw, 45vh) scale(0.7);
+  }
+  50% {
+    transform: translate(-35vw, -20vh) scale(1);
+  }
+  75% {
+    transform: translate(10vw, -45vh) scale(1.1);
+  }
+}
+
+@keyframes move4 {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  25% {
+    transform: translate(-20vw, -40vh) scale(1.1);
+  }
+  50% {
+    transform: translate(30vw, 30vh) scale(0.8);
+  }
+  75% {
+    transform: translate(40vw, -10vh) scale(1);
+  }
+}
+
+@keyframes move5 {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  25% {
+    transform: translate(15vw, -25vh) scale(0.8);
+  }
+  50% {
+    transform: translate(-25vw, 15vh) scale(1.2);
+  }
+  75% {
+    transform: translate(35vw, 25vh) scale(0.9);
+  }
+}
+
+/* =================================================================
    4. LAYOUT & NAVIGATION
    ================================================================= */
 .container {
@@ -225,111 +368,117 @@ nav.scrolled {
 
 /* --- Primary Solid Button (e.g., View My Work) --- */
 .btn-primary {
-    padding: 0.8rem 1.8rem;
-    color: var(--text-primary);
-    border: 1px solid transparent;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-    text-decoration: none;
-    transition: all var(--transition-medium);
-    background: var(--accent-gradient);
-    background-size: 200% auto;
-    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
-    position: relative;
-    overflow: hidden;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
+  padding: 0.8rem 1.8rem;
+  color: var(--text-primary);
+  border: 1px solid transparent;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all var(--transition-medium);
+  background: var(--accent-gradient);
+  background-size: 200% auto;
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .btn-primary::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 75%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-    transform: skewX(-25deg);
-    transition: left 0.7s ease;
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 75%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transform: skewX(-25deg);
+  transition: left 0.7s ease;
 }
 
 .btn-primary:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 30px rgba(99, 102, 241, 0.6);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(99, 102, 241, 0.6);
 }
 
 .btn-primary:hover::before {
-    left: 125%;
+  left: 125%;
 }
-
 
 /* --- High-Tech Ghost Button (for Resume) --- */
 .cta-btn {
-    padding: 0.8rem 1.8rem;
-    border: 2px solid transparent;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-    text-decoration: none;
-    position: relative;
-    overflow: hidden;
-    z-index: 1;
-    background: var(--bg-primary);
-    background-clip: padding-box;
-    color: var(--text-primary);
-    transition: color 0.4s ease-in-out;
+  padding: 0.8rem 1.8rem;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  background: var(--bg-primary);
+  background-clip: padding-box;
+  color: var(--text-primary);
+  transition: color 0.4s ease-in-out;
 }
 
 .cta-btn::before {
-    content: '';
-    position: absolute;
-    top: -2px; left: -2px;
-    right: -2px; bottom: -2px;
-    background: var(--accent-gradient);
-    z-index: -2;
-    border-radius: inherit;
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: var(--accent-gradient);
+  z-index: -2;
+  border-radius: inherit;
 }
 
 .cta-btn::after {
-    content: '';
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%;
-    height: 100%;
-    background: var(--accent-gradient);
-    z-index: -1;
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.4s cubic-bezier(0.7, 0, 0.3, 1);
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--accent-gradient);
+  z-index: -1;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s cubic-bezier(0.7, 0, 0.3, 1);
 }
 
 .cta-btn:hover::after {
-    transform: scaleX(1);
-    transform-origin: right;
+  transform: scaleX(1);
+  transform-origin: right;
 }
 
 /* Secondary Button (Unchanged) */
 .btn-secondary {
-    padding: 0.8rem 1.8rem;
-    background: transparent;
-    color: var(--text-primary);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    font-weight: 600;
-    text-decoration: none;
-    transition: all var(--transition-medium);
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
+  padding: 0.8rem 1.8rem;
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all var(--transition-medium);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 .btn-secondary:hover {
-    border-color: var(--accent-primary);
-    background: rgba(99, 102, 241, 0.1);
-    transform: translateY(-3px);
+  border-color: var(--accent-primary);
+  background: rgba(99, 102, 241, 0.1);
+  transform: translateY(-3px);
 }
-
 
 /* =================================================================
    6. PAGE SECTIONS & HEADERS

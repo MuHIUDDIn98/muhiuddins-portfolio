@@ -29,11 +29,6 @@ class GeneralInfo(models.Model):
     skills_title = models.CharField(max_length=200, default="My Capabilities")
     skills_subtitle = models.TextField(default="A blend of modern technologies and core software engineering expertise.")
     
-    # Certifications Section
-    licenses_section_tag = models.CharField(max_length=50, default="Licenses")
-    licenses_title = models.CharField(max_length=200, default="Licenses & Certifications")
-    licenses_subtitle = models.TextField(default="A showcase of my credentials and professional qualifications.")
-
 
     # Projects Section
     projects_section_tag = models.CharField(max_length=50, default="Projects")
@@ -132,41 +127,6 @@ class SocialLink(models.Model):
     def __str__(self):
         return self.platform_name
 
-# --- Certifications Section ---
-class LicenseCategory(models.Model):
-    name = models.CharField(max_length=100, unique=True)
-    slug = models.SlugField(max_length=100, unique=True, blank=True, help_text="URL-friendly version of the name. Auto-generated.")
-
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.name)
-        super().save(*args, **kwargs)
-
-    def __str__(self):
-        return self.name
-    
-    class Meta:
-        verbose_name_plural = "License Categories"
-
-
-
-class License(models.Model):
-    title = models.CharField(max_length=200)
-    organization = models.CharField(max_length=200)
-    date_issued = models.DateField()
-    credential_url = models.URLField(blank=True, null=True, help_text="Link to the credential verification page.")
-    image = models.ImageField(upload_to='license_images/', help_text="Upload a logo or image for the license.")
-    display_order = models.PositiveIntegerField(default=0, help_text="Set display order (lower numbers show first).")
-    categories = models.ManyToManyField(LicenseCategory, related_name='licenses') # Add this field
-
-    class Meta:
-        ordering = ['display_order', '-date_issued']
-
-    def __str__(self):
-        return f"{self.title} - {self.organization}"
-    
-    
-
 
 class ClickEvent(models.Model):
     ACTION_CHOICES = [
@@ -174,7 +134,6 @@ class ClickEvent(models.Model):
         ('PROJECT_LIVE_DEMO', 'Project Live Demo'),
         ('PROJECT_GITHUB', 'Project GitHub'),
         ('EMAIL_CLICK', 'Email Click'),
-        ('LICENSE_VIEW', 'License View'),
     ]
 
     action_type = models.CharField(max_length=50, choices=ACTION_CHOICES)

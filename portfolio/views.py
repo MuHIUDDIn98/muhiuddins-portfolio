@@ -6,10 +6,8 @@ from .models import (
     Expertise,
     ProjectCategory,
     Project,
-    SocialLink,
-    LicenseCategory,
-    License,
-    ClickEvent  # This import was missing
+    SocialLink,  
+    ClickEvent  
 )
 
 # --- Helper function to get the real IP address ---
@@ -31,8 +29,6 @@ def portfolio_view(request):
     project_categories = ProjectCategory.objects.all()
     projects = Project.objects.prefetch_related('categories', 'tags').all()
     social_links = SocialLink.objects.all()
-    license_categories = LicenseCategory.objects.all()
-    licenses = License.objects.prefetch_related('categories').all()
 
     context = {
         'info': general_info,
@@ -41,8 +37,7 @@ def portfolio_view(request):
         'project_categories': project_categories,
         'projects': projects,
         'social_links': social_links,
-        'license_categories': license_categories,
-        'licenses': licenses,
+        
     }
     return render(request, 'index.html', context)
 

@@ -25,9 +25,6 @@
 /* =================================================================
    2. GLOBAL STYLES & RESET
    ================================================================= */
-/* =================================================================
-   2. GLOBAL STYLES & RESET
-   ================================================================= */
 * {
   margin: 0;
   padding: 0;
@@ -36,7 +33,7 @@
 
 html {
   scroll-behavior: smooth;
-  overflow-x: hidden; /* [FIX] Add this line */
+  overflow-x: hidden;
 }
 
 body {
@@ -44,7 +41,7 @@ body {
   background-color: var(--bg-primary);
   color: var(--text-secondary);
   line-height: 1.7;
-  overflow-x: hidden; /* [FIX] Make sure this line is here */
+  overflow-x: hidden;
 }
 /* Custom Scrollbar for a modern look */
 ::-webkit-scrollbar {
@@ -82,7 +79,7 @@ body {
       rgba(139, 92, 246, 0.08) 0%,
       transparent 50%
     );
-  overflow: hidden; /* [FIX] Add this line to clip the oversized orbs */
+  overflow: hidden;
 }
 
 .orb {
@@ -198,7 +195,6 @@ nav.scrolled {
   text-shadow: 0 0 15px var(--glow);
 }
 
-/* [FIX] Added this rule to correct the desktop navigation layout */
 .nav-menu {
   display: flex;
   align-items: center;
@@ -229,125 +225,111 @@ nav.scrolled {
 
 /* --- Primary Solid Button (e.g., View My Work) --- */
 .btn-primary {
-  padding: 0.8rem 1.8rem;
-  color: var(--text-primary);
-  border: 1px solid transparent;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  text-decoration: none;
-  transition: all var(--transition-medium);
-  background: var(--accent-gradient);
-  background-size: 200% auto;
-  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
-  position: relative;
-  overflow: hidden;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
+    padding: 0.8rem 1.8rem;
+    color: var(--text-primary);
+    border: 1px solid transparent;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all var(--transition-medium);
+    background: var(--accent-gradient);
+    background-size: 200% auto;
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+    position: relative;
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 .btn-primary::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 75%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.3),
-    transparent
-  );
-  transform: skewX(-25deg);
-  transition: left 0.7s ease;
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 75%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transform: skewX(-25deg);
+    transition: left 0.7s ease;
 }
 
 .btn-primary:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 30px rgba(99, 102, 241, 0.6);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(99, 102, 241, 0.6);
 }
 
 .btn-primary:hover::before {
-  left: 125%;
+    left: 125%;
 }
 
-/* --- [NEW] High-Tech Ghost Button (for Resume) --- */
+
+/* --- High-Tech Ghost Button (for Resume) --- */
 .cta-btn {
-  padding: 0.8rem 1.8rem;
-  border: 2px solid transparent; /* Border thickness */
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  text-decoration: none;
-  position: relative;
-  overflow: hidden;
-  z-index: 1;
-
-  /* Create the gradient border */
-  background: var(--bg-primary);
-  background-clip: padding-box; /* The background color is inside the border */
-
-  color: var(--text-primary);
-  transition: color 0.4s ease-in-out;
+    padding: 0.8rem 1.8rem;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    background: var(--bg-primary);
+    background-clip: padding-box;
+    color: var(--text-primary);
+    transition: color 0.4s ease-in-out;
 }
 
-/* The gradient that will be the border */
 .cta-btn::before {
-  content: "";
-  position: absolute;
-  top: -2px;
-  left: -2px;
-  right: -2px;
-  bottom: -2px;
-  background: var(--accent-gradient);
-  z-index: -2;
-  border-radius: inherit;
+    content: '';
+    position: absolute;
+    top: -2px; left: -2px;
+    right: -2px; bottom: -2px;
+    background: var(--accent-gradient);
+    z-index: -2;
+    border-radius: inherit;
 }
 
-/* The animated fill effect on hover */
 .cta-btn::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: var(--accent-gradient);
-  z-index: -1;
-
-  /* Start scaled to 0 from the left */
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.4s cubic-bezier(0.7, 0, 0.3, 1);
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--accent-gradient);
+    z-index: -1;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s cubic-bezier(0.7, 0, 0.3, 1);
 }
 
 .cta-btn:hover::after {
-  /* Fill the button on hover */
-  transform: scaleX(1);
-  transform-origin: right;
+    transform: scaleX(1);
+    transform-origin: right;
 }
 
 /* Secondary Button (Unchanged) */
 .btn-secondary {
-  padding: 0.8rem 1.8rem;
-  background: transparent;
-  color: var(--text-primary);
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  font-weight: 600;
-  text-decoration: none;
-  transition: all var(--transition-medium);
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
+    padding: 0.8rem 1.8rem;
+    background: transparent;
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all var(--transition-medium);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 .btn-secondary:hover {
-  border-color: var(--accent-primary);
-  background: rgba(99, 102, 241, 0.1);
-  transform: translateY(-3px);
+    border-color: var(--accent-primary);
+    background: rgba(99, 102, 241, 0.1);
+    transform: translateY(-3px);
 }
+
 
 /* =================================================================
    6. PAGE SECTIONS & HEADERS
@@ -572,8 +554,6 @@ section {
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
   border-color: rgba(255, 255, 255, 0.1);
 }
-
-/* [FIX] Removed old/conflicting ::before pseudo-element for rotating border */
 
 /* Aurora Shimmer Effect */
 .skill-card::after,
@@ -844,10 +824,10 @@ section {
    ================================================================= */
 .project-filters {
   display: flex;
-  justify-content: center; /* Optional: to center the buttons */
+  justify-content: center;
   gap: 0.75rem;
   margin-bottom: 3rem;
-  flex-wrap: wrap; /* Add this */
+  flex-wrap: wrap;
   padding-bottom: 1rem;
 }
 .filter-btn {
@@ -1062,7 +1042,6 @@ footer {
   nav {
     padding: 1rem 0;
   }
-  /* .nav-links is handled by the mobile menu logic below */
 
   /* --- Hero Section --- */
   .hero {
@@ -1316,18 +1295,15 @@ footer {
     height: 100vh;
     width: 80%;
     max-width: 350px;
-    background: rgba(18, 18, 26, 0.8); /* Slightly more transparent */
+    background: rgba(18, 18, 26, 0.8);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Center items vertically */
+    justify-content: center;
     align-items: center;
     gap: 2rem;
     box-shadow: 5px 0 25px rgba(0, 0, 0, 0.2);
-
-    /* [NEW EFFECT] Hide menu off-screen and with a clip-path */
     transform: translateX(-100%);
     clip-path: inset(0 100% 0 0);
     transition: transform 0.5s cubic-bezier(0.7, 0, 0.3, 1),
@@ -1336,7 +1312,6 @@ footer {
   }
 
   .nav-menu.is-active {
-    /* [NEW EFFECT] Slide and wipe into view */
     transform: translateX(0);
     clip-path: inset(0 0 0 0);
   }
@@ -1362,7 +1337,7 @@ footer {
   .nav-menu.is-active .nav-links li,
   .nav-menu.is-active .cta-btn {
     animation: fadeInUp 0.4s ease forwards;
-    animation-delay: 0.3s; /* Delay all items until menu is open */
+    animation-delay: 0.3s;
   }
   .nav-menu.is-active .nav-links li:nth-child(2) {
     animation-delay: 0.4s;
@@ -1396,12 +1371,10 @@ body::before {
     circle at 80% 80%,
     rgba(236, 72, 153, 0.2),
     rgba(10, 10, 15, 0.8)
-  ); /* Magenta and Black blury effect */
+  );
   backdrop-filter: blur(0px);
   -webkit-backdrop-filter: blur(30px);
   z-index: 999;
-
-  /* Hidden by default */
   opacity: 0;
   pointer-events: none;
   transition: backdrop-filter 0.5s ease, opacity 0.5s ease;

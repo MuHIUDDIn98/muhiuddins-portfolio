@@ -26,7 +26,6 @@
                 <ul class="nav-links">
                     <li><a href="#about" class="nav-link">About</a></li>
                     <li><a href="#skills" class="nav-link">Skills</a></li>
-                    <li><a href="#licenses" class="nav-link">Licenses</a></li>
                     <li><a href="#all-projects" class="nav-link">Projects</a></li>
                     <li><a href="#contact" class="nav-link">Contact</a></li>
                 </ul>
@@ -139,41 +138,7 @@
             </div>
         </section>
 
-        <section id="licenses">
-            <div class="container">
-                <div class="section-header">
-                    <span class="section-tag">{{ info.licenses_section_tag }}</span>
-                    <h2 class="section-title">{{ info.licenses_title }}</h2>
-                    <p class="section-subtitle">{{ info.licenses_subtitle }}</p>
-                </div>
-                <div class="license-filters project-filters">
-                    <button class="filter-btn active" data-filter="all">All</button>
-                    {% for category in license_categories %}
-                    <button class="filter-btn" data-filter="{{ category.slug }}">{{ category.name }}</button>
-                    {% endfor %}
-                </div>
-                <div class="licenses-grid certifications-grid">
-                    {% for license in licenses %}
-                    <div class="license-card cert-card" data-category="{% for cat in license.categories.all %}{{ cat.slug }} {% endfor %}">
-                        <div class="cert-image">
-                            <img src="{{ license.image.url }}" alt="{{ license.organization }} Logo">
-                        </div>
-                        <div class="cert-content">
-                            <h3 class="cert-title">{{ license.title }}</h3>
-                            <p class="cert-org">{{ license.organization }}</p>
-                            <p class="cert-date">Issued: {{ license.date_issued|date:"M Y" }}</p>
-                            {% if license.credential_url %}
-                            <a href="{% url 'track_click' %}?action=LICENSE_VIEW&redirect_url={{ license.credential_url }}&details={{ license.title|urlencode }}" class="cert-link" target="_blank">
-                                View Credential <i class="bi bi-box-arrow-up-right"></i>
-                            </a>
-                            {% endif %}
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
-        </section>
-
+       
         <section id="all-projects">
             <div class="container">
                 <div class="section-header">

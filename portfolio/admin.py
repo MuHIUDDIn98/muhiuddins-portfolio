@@ -2,8 +2,7 @@ from django.contrib import admin
 from .models import ClickEvent 
 from .models import (
     GeneralInfo, SkillCategory, Skill, Expertise,
-    ProjectCategory, Tag, Project, SocialLink,
-    LicenseCategory, License 
+    ProjectCategory, Tag, Project, SocialLink
 )
 
 # Use inline for a better editing experience when inside a Category
@@ -37,18 +36,6 @@ class ProjectAdmin(admin.ModelAdmin):
     list_filter = ('is_featured', 'categories')
     filter_horizontal = ('categories', 'tags')
 
-@admin.register(LicenseCategory)
-class LicenseCategoryAdmin(admin.ModelAdmin):
-    prepopulated_fields = {'slug': ('name',)}
-
-# Find and replace your old CertificationAdmin with this LicenseAdmin
-@admin.register(License)
-class LicenseAdmin(admin.ModelAdmin):
-    list_display = ('title', 'organization', 'date_issued', 'display_order')
-    list_editable = ('display_order',)
-    list_filter = ('categories',)
-    filter_horizontal = ('categories',) # Better UI for ManyToMany fields
- 
 
 @admin.register(ClickEvent)
 class ClickEventAdmin(admin.ModelAdmin):

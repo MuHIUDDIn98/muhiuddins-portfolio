@@ -229,119 +229,125 @@ nav.scrolled {
 
 /* --- Primary Solid Button (e.g., View My Work) --- */
 .btn-primary {
-    padding: 0.8rem 1.8rem;
-    color: var(--text-primary);
-    border: 1px solid transparent;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-    text-decoration: none;
-    transition: all var(--transition-medium);
-    background: var(--accent-gradient);
-    background-size: 200% auto;
-    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
-    position: relative;
-    overflow: hidden;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
+  padding: 0.8rem 1.8rem;
+  color: var(--text-primary);
+  border: 1px solid transparent;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all var(--transition-medium);
+  background: var(--accent-gradient);
+  background-size: 200% auto;
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .btn-primary::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 75%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-    transform: skewX(-25deg);
-    transition: left 0.7s ease;
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 75%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transform: skewX(-25deg);
+  transition: left 0.7s ease;
 }
 
 .btn-primary:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 30px rgba(99, 102, 241, 0.6);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(99, 102, 241, 0.6);
 }
 
 .btn-primary:hover::before {
-    left: 125%;
+  left: 125%;
 }
-
 
 /* --- [NEW] High-Tech Ghost Button (for Resume) --- */
 .cta-btn {
-    padding: 0.8rem 1.8rem;
-    border: 2px solid transparent; /* Border thickness */
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-    text-decoration: none;
-    position: relative;
-    overflow: hidden;
-    z-index: 1;
+  padding: 0.8rem 1.8rem;
+  border: 2px solid transparent; /* Border thickness */
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
 
-    /* Create the gradient border */
-    background: var(--bg-primary);
-    background-clip: padding-box; /* The background color is inside the border */
-    
-    color: var(--text-primary);
-    transition: color 0.4s ease-in-out;
+  /* Create the gradient border */
+  background: var(--bg-primary);
+  background-clip: padding-box; /* The background color is inside the border */
+
+  color: var(--text-primary);
+  transition: color 0.4s ease-in-out;
 }
 
 /* The gradient that will be the border */
 .cta-btn::before {
-    content: '';
-    position: absolute;
-    top: -2px; left: -2px;
-    right: -2px; bottom: -2px;
-    background: var(--accent-gradient);
-    z-index: -2;
-    border-radius: inherit;
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: var(--accent-gradient);
+  z-index: -2;
+  border-radius: inherit;
 }
 
 /* The animated fill effect on hover */
 .cta-btn::after {
-    content: '';
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%;
-    height: 100%;
-    background: var(--accent-gradient);
-    z-index: -1;
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--accent-gradient);
+  z-index: -1;
 
-    /* Start scaled to 0 from the left */
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.4s cubic-bezier(0.7, 0, 0.3, 1);
+  /* Start scaled to 0 from the left */
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s cubic-bezier(0.7, 0, 0.3, 1);
 }
 
 .cta-btn:hover::after {
-    /* Fill the button on hover */
-    transform: scaleX(1);
-    transform-origin: right;
+  /* Fill the button on hover */
+  transform: scaleX(1);
+  transform-origin: right;
 }
 
 /* Secondary Button (Unchanged) */
 .btn-secondary {
-    padding: 0.8rem 1.8rem;
-    background: transparent;
-    color: var(--text-primary);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    font-weight: 600;
-    text-decoration: none;
-    transition: all var(--transition-medium);
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
+  padding: 0.8rem 1.8rem;
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all var(--transition-medium);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 .btn-secondary:hover {
-    border-color: var(--accent-primary);
-    background: rgba(99, 102, 241, 0.1);
-    transform: translateY(-3px);
+  border-color: var(--accent-primary);
+  background: rgba(99, 102, 241, 0.1);
+  transform: translateY(-3px);
 }
-
 
 /* =================================================================
    6. PAGE SECTIONS & HEADERS
@@ -838,10 +844,10 @@ section {
    ================================================================= */
 .project-filters {
   display: flex;
+  justify-content: center; /* Optional: to center the buttons */
   gap: 0.75rem;
   margin-bottom: 3rem;
-  overflow-x: auto;
-  white-space: nowrap;
+  flex-wrap: wrap; /* Add this */
   padding-bottom: 1rem;
 }
 .filter-btn {

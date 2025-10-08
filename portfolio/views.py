@@ -37,29 +37,36 @@ def portfolio_view(request):
         'project_categories': project_categories,
         'projects': projects,
         'social_links': social_links,
-        
     }
     return render(request, 'index.html', context)
 
 
 # --- View for tracking user clicks ---
-# --- [UPDATED] View for tracking user clicks ---
 def track_click(request):
     action = request.GET.get('action')
     redirect_url = request.GET.get('redirect_url')
-    details = request.GET.get('details')
+    details_param = request.GET.get('details') # Use a different name to avoid confusion
+
+    project_instance = None
+    # If the click is project-related, try to find the project object
+    if action in ['PROJECT_LIVE_DEMO', 'PROJECT_GITHUB'] and details_param:
+        try:
+            # We expect 'details_param' to be the project's ID
+            project_instance = Project.objects.get(pk=int(details_param))
+        except (Project.DoesNotExist, ValueError):
+            # If the ID is invalid or project doesn't exist, we just ignore it
+            project_instance = None
 
     if action:
         ClickEvent.objects.create(
             action_type=action,
             ip_address=get_ip_address(request),
             user_agent=request.META.get('HTTP_USER_AGENT', ''),
-            details=details,
+            project=project_instance,  # Save the linked project object here
+            details=f"Project ID: {details_param}" if project_instance else details_param
         )
     
-    # If a redirect_url is provided, redirect the user.
     if redirect_url:
         return HttpResponseRedirect(redirect_url)
     
-    # Otherwise (for background requests), return a success response with no content.
     return HttpResponse(status=204)

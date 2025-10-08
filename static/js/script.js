@@ -191,4 +191,8 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   window.addEventListener("scroll", animateOnScroll);
   animateOnScroll(); // Run once on load to check initial view
+
+  // --- Initial Filter States on page load ---
+  filterSkills("all");
+  filterProjects("featured");
 });

@@ -60,65 +60,6 @@ body {
 }
 
 /* =================================================================
-   3. ANIMATED BACKGROUNDS
-   ================================================================= */
-.animated-bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-  background: radial-gradient(
-      circle at 20% 50%,
-      rgba(99, 102, 241, 0.08) 0%,
-      transparent 50%
-    ),
-    radial-gradient(
-      circle at 80% 80%,
-      rgba(139, 92, 246, 0.08) 0%,
-      transparent 50%
-    );
-  overflow: hidden;
-}
-
-.orb {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(80px);
-  opacity: 0.4;
-  animation: float 20s infinite ease-in-out;
-}
-.orb-1 {
-  width: 400px;
-  height: 400px;
-  background: var(--accent-gradient);
-  top: -200px;
-  left: -200px;
-}
-.orb-2 {
-  width: 500px;
-  height: 500px;
-  background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
-  bottom: -250px;
-  right: -250px;
-  animation-delay: 7s;
-}
-
-@keyframes float {
-  0%,
-  100% {
-    transform: translate(0, 0) scale(1);
-  }
-  33% {
-    transform: translate(30px, -50px) scale(1.1);
-  }
-  66% {
-    transform: translate(-20px, 20px) scale(0.9);
-  }
-}
-
-/* =================================================================
    3. ANIMATED GRADIENT BACKGROUND
    ================================================================= */
 .gradient-bg {
@@ -151,33 +92,58 @@ body {
 
 /* --- Your Requested Orb Colors --- */
 .g1 {
-    /* Purple with lower opacity to reduce whiteness */
-    background: radial-gradient(circle at center, rgba(139, 92, 246, 0.3) 0, rgba(139, 92, 246, 0) 50%) no-repeat;
-    animation: move1 18s infinite;
+  /* Purple with lower opacity to reduce whiteness */
+  background: radial-gradient(
+      circle at center,
+      rgba(139, 92, 246, 0.3) 0,
+      rgba(139, 92, 246, 0) 50%
+    )
+    no-repeat;
+  animation: move1 18s infinite;
 }
 
 .g2 {
-    /* Blue with lower opacity */
-    background: radial-gradient(circle at center, rgba(37, 99, 235, 0.3) 0, rgba(37, 99, 235, 0) 50%) no-repeat;
-    animation: move2 20s infinite;
+  /* Blue with lower opacity */
+  background: radial-gradient(
+      circle at center,
+      rgba(37, 99, 235, 0.3) 0,
+      rgba(37, 99, 235, 0) 50%
+    )
+    no-repeat;
+  animation: move2 20s infinite;
 }
 
 .g3 {
-    /* Near-Black orb to maintain depth */
-    background: radial-gradient(circle at center, rgba(10, 10, 15, 0.3) 0, rgba(10, 10, 15, 0) 50%) no-repeat;
-    animation: move3 16s infinite;
+  /* Near-Black orb to maintain depth */
+  background: radial-gradient(
+      circle at center,
+      rgba(10, 10, 15, 0.3) 0,
+      rgba(10, 10, 15, 0) 50%
+    )
+    no-repeat;
+  animation: move3 16s infinite;
 }
 
 .g4 {
-    /* Purple with lower opacity */
-    background: radial-gradient(circle at center, rgba(139, 92, 246, 0.3) 0, rgba(139, 92, 246, 0) 50%) no-repeat;
-    animation: move4 22s infinite;
+  /* Purple with lower opacity */
+  background: radial-gradient(
+      circle at center,
+      rgba(139, 92, 246, 0.3) 0,
+      rgba(139, 92, 246, 0) 50%
+    )
+    no-repeat;
+  animation: move4 22s infinite;
 }
 
 .g5 {
-    /* Changed to purple to emphasize the color */
-    background: radial-gradient(circle at center, rgba(139, 92, 246, 0.3) 0, rgba(139, 92, 246, 0) 50%) no-repeat;
-    animation: move5 19s infinite;
+  /* Changed to purple to emphasize the color */
+  background: radial-gradient(
+      circle at center,
+      rgba(139, 92, 246, 0.3) 0,
+      rgba(139, 92, 246, 0) 50%
+    )
+    no-repeat;
+  animation: move5 19s infinite;
 }
 /* --- End of Orb Colors --- */
 

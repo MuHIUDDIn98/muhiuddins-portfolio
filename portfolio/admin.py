@@ -1,4 +1,6 @@
 from django.contrib import admin
+from django.utils.html import format_html
+from django.urls import reverse
 from .models import ClickEvent 
 from .models import (
     GeneralInfo, SkillCategory, Skill, Expertise,
@@ -39,10 +41,19 @@ class ProjectAdmin(admin.ModelAdmin):
 
 @admin.register(ClickEvent)
 class ClickEventAdmin(admin.ModelAdmin):
-    list_display = ('timestamp', 'action_type', 'ip_address', 'details')
+    list_display = ('timestamp', 'action_type', 'get_project_link', 'ip_address')
     list_filter = ('action_type', 'timestamp')
-    search_fields = ('ip_address', 'user_agent', 'details')
-    readonly_fields = ('timestamp', 'action_type', 'ip_address', 'user_agent', 'details')
+    search_fields = ('ip_address', 'user_agent', 'details', 'project__title')
+    readonly_fields = ('timestamp', 'action_type', 'ip_address', 'user_agent', 'details', 'get_project_link')
+
+    @admin.display(description='Project Title')
+    def get_project_link(self, obj):
+        if obj.project:
+            # Create a link to the project's own admin page
+            url = reverse('admin:portfolio_project_change', args=[obj.project.pk])
+            return format_html('<a href="{}">{}</a>', url, obj.project.title)
+        # For non-project clicks, show the details if they exist
+        return obj.details or "N/A"
 
     def has_add_permission(self, request):
         return False

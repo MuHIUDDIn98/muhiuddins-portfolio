@@ -29,7 +29,6 @@ class GeneralInfo(models.Model):
     skills_title = models.CharField(max_length=200, default="My Capabilities")
     skills_subtitle = models.TextField(default="A blend of modern technologies and core software engineering expertise.")
     
-
     # Projects Section
     projects_section_tag = models.CharField(max_length=50, default="Projects")
     projects_title = models.CharField(max_length=200, default="My Projects")
@@ -136,11 +135,12 @@ class ClickEvent(models.Model):
         ('EMAIL_CLICK', 'Email Click'),
     ]
 
+    project = models.ForeignKey(Project, on_delete=models.SET_NULL, null=True, blank=True, related_name="click_events")
     action_type = models.CharField(max_length=50, choices=ACTION_CHOICES)
     timestamp = models.DateTimeField(auto_now_add=True)
     ip_address = models.GenericIPAddressField(null=True, blank=True)
     user_agent = models.TextField(null=True, blank=True)
-    details = models.CharField(max_length=255, null=True, blank=True, help_text="e.g., Project ID or License Title")
+    details = models.CharField(max_length=255, null=True, blank=True, help_text="e.g., Project ID or other info")
 
     class Meta:
         ordering = ['-timestamp']

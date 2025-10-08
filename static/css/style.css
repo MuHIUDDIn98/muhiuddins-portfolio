@@ -1502,3 +1502,45 @@ body.nav-open::before {
   -webkit-backdrop-filter: blur(5px);
   pointer-events: auto;
 }
+
+/* =================================================================
+   SVG ICON STYLING
+   ================================================================= */
+
+/* For SVGs in the Skills section */
+.skill-card svg {
+  width: 3rem;
+  height: 3rem;
+  margin-bottom: 1rem;
+  fill: currentColor; /* Allows color to be inherited */
+  color: var(--accent-secondary); /* Sets the default color */
+  transition: color 0.3s ease;
+}
+.skill-card:hover svg {
+  color: var(--text-primary);
+}
+
+/* For SVGs in the Expertise section */
+.expertise-card svg {
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-bottom: 1.5rem;
+  fill: currentColor;
+  color: var(--accent-primary);
+  display: block;
+}
+
+/* For SVGs in the Social Links section */
+.social-link-new svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  fill: currentColor;
+  color: var(--accent-primary);
+}
+
+/* For the GitHub SVG in the project overlay */
+.overlay-btn .overlay-btn-svg {
+  width: 1rem;
+  height: 1rem;
+  fill: currentColor;
+}

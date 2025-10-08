@@ -5,12 +5,8 @@ from django.utils.text import slugify
 class GeneralInfo(models.Model):
     name = models.CharField(max_length=100, help_text="Your name for the navbar logo and footer.")
     resume = models.FileField(upload_to='resumes/', blank=True, null=True, help_text="Upload your resume PDF file.")
-    
-    # Hero Section
     hero_title = models.TextField(default="Building digital<br><span class='gradient-text'>experiences</span> that matter")
     hero_subtitle = models.TextField(default="Full-stack developer crafting beautiful, accessible, and performant web applications with modern technologies.")
-    
-    # About Section
     about_section_tag = models.CharField(max_length=50, default="About Me")
     about_title = models.CharField(max_length=200, default="Crafting Digital Solutions")
     about_subtitle = models.TextField(default="Passionate about creating innovative web experiences that combine beautiful design with powerful functionality")
@@ -18,30 +14,20 @@ class GeneralInfo(models.Model):
     about_content_title = models.CharField(max_length=200, default="Hello! I'm a developer who loves building things for the web.")
     about_content_p1 = models.TextField(default="My journey in web development started years ago...")
     about_content_p2 = models.TextField(default="Currently, I'm focused on building innovative products...")
-
-    # Stats
     projects_completed = models.CharField(max_length=10, default="50+")
     happy_clients = models.CharField(max_length=10, default="30+")
     years_experience = models.CharField(max_length=10, default="3+")
-
-    # Skills Section
     skills_section_tag = models.CharField(max_length=50, default="Skills")
     skills_title = models.CharField(max_length=200, default="My Capabilities")
     skills_subtitle = models.TextField(default="A blend of modern technologies and core software engineering expertise.")
-    
-    # Projects Section
     projects_section_tag = models.CharField(max_length=50, default="Projects")
     projects_title = models.CharField(max_length=200, default="My Projects")
     projects_subtitle = models.TextField(default="A collection of my work. Use the filters to explore different categories.")
-
-    # Contact Section
     contact_section_tag = models.CharField(max_length=50, default="Contact")
     contact_title = models.CharField(max_length=200, default="Let's Build Something Amazing")
     contact_text_title = models.CharField(max_length=200, default="Have a project in mind or just want to connect? My inbox is always open.")
     contact_text_subtitle = models.TextField(default="I'm currently available for freelance opportunities...")
     contact_email = models.EmailField(default="youremail@example.com")
-    
-    # Footer
     footer_text = models.CharField(max_length=100, default="Designed & Built by Your Name")
 
     def __str__(self):
@@ -67,13 +53,15 @@ class SkillCategory(models.Model):
 class Skill(models.Model):
     category = models.ForeignKey(SkillCategory, related_name='skills', on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
-    icon_class = models.CharField(max_length=100, help_text="e.g., 'bi bi-filetype-html'")
+    # CHANGED
+    svg_icon_code = models.TextField(blank=True, null=True, help_text="Paste the full SVG code for the icon.")
 
     def __str__(self):
         return f"{self.name} ({self.category.name})"
 
 class Expertise(models.Model):
-    icon_class = models.CharField(max_length=100, help_text="e.g., 'bi bi-gear-wide-connected'")
+    # CHANGED
+    svg_icon_code = models.TextField(blank=True, null=True, help_text="Paste the full SVG code for the icon.")
     title = models.CharField(max_length=100)
     description = models.TextField()
 
@@ -120,7 +108,8 @@ class Project(models.Model):
 # --- Contact Section ---
 class SocialLink(models.Model):
     platform_name = models.CharField(max_length=50, help_text="e.g., GitHub, LinkedIn")
-    icon_class = models.CharField(max_length=100, help_text="e.g., 'bi bi-github'")
+    # CHANGED
+    svg_icon_code = models.TextField(blank=True, null=True, help_text="Paste the SVG code from Simple Icons.")
     link = models.URLField()
 
     def __str__(self):

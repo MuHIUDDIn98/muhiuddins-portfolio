@@ -13,7 +13,7 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool('DEBUG', default=False)
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['https://muhiuddins-portfolio.onrender.com','localhost', '127.0.0.1']
 
 
 # Application definition
@@ -63,7 +63,10 @@ WSGI_APPLICATION = "portfolio_project.wsgi.application"
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    'default': env.db(),
+    'default': env.db_url(
+        'DATABASE_URL',
+        engine='django.db.backends.postgresql'
+    )
 }
 
 

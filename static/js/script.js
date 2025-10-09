@@ -66,43 +66,43 @@ function main() {
       });
     }
   };
-  
+
   /**
    * Initializes all content filtering using event delegation.
    */
   const initFiltering = () => {
     // Main Skills Tabs (Tech Stack / Expertise)
     elements.skillTabsContainer?.addEventListener("click", e => {
-        if (!e.target.matches(".tab-btn")) return;
-        elements.skillTabsContainer.querySelectorAll(".tab-btn").forEach(t => t.classList.remove("active"));
-        e.target.classList.add("active");
-        elements.skillPanels.forEach(p => p.classList.remove("active"));
-        document.querySelector(e.target.dataset.target)?.classList.add("active");
+      if (!e.target.matches(".tab-btn")) return;
+      elements.skillTabsContainer.querySelectorAll(".tab-btn").forEach(t => t.classList.remove("active"));
+      e.target.classList.add("active");
+      elements.skillPanels.forEach(p => p.classList.remove("active"));
+      document.querySelector(e.target.dataset.target)?.classList.add("active");
     });
 
     const setupFilter = (container, buttonSelector, cards, dataAttribute) => {
-        if (!container) return;
-        container.addEventListener('click', e => {
-            if (!e.target.matches(buttonSelector)) return;
-            const filter = e.target.dataset[dataAttribute];
-            container.querySelectorAll(buttonSelector).forEach(btn => btn.classList.remove('active'));
-            e.target.classList.add('active');
-            cards.forEach(card => {
-                const categories = card.dataset.category?.split(' ') || [];
-                const shouldShow = filter === 'all' || categories.includes(filter);
-                card.classList.toggle('hide', !shouldShow);
-            });
+      if (!container) return;
+      container.addEventListener('click', e => {
+        if (!e.target.matches(buttonSelector)) return;
+        const filter = e.target.dataset[dataAttribute];
+        container.querySelectorAll(buttonSelector).forEach(btn => btn.classList.remove('active'));
+        e.target.classList.add('active');
+        cards.forEach(card => {
+          const categories = card.dataset.category?.split(' ') || [];
+          const shouldShow = filter === 'all' || categories.includes(filter);
+          card.classList.toggle('hide', !shouldShow);
         });
+      });
     };
-    
+
     setupFilter(elements.subTabsContainer, '.sub-tab-btn', elements.skillCards, 'category');
     setupFilter(elements.projectFiltersContainer, '.filter-btn', elements.projectCards, 'filter');
-    
+
     // Set initial states
     elements.subTabsContainer?.querySelector('[data-category="all"]')?.click();
     elements.projectFiltersContainer?.querySelector('[data-filter="featured"]')?.click();
   };
-  
+
   /**
    * Initializes scroll-based animations and interactive mouse-move effects.
    */
@@ -118,11 +118,11 @@ function main() {
 
     elements.statItems.forEach(item => observer.observe(item));
     elements.sectionHeaders.forEach(header => {
-        // Renaming in-view to scanned for this specific element to trigger the right animation
-        header.addEventListener('in-view', () => header.classList.add('scanned'), { once: true });
-        observer.observe(header);
+      // Renaming in-view to scanned for this specific element to trigger the right animation
+      header.addEventListener('in-view', () => header.classList.add('scanned'), { once: true });
+      observer.observe(header);
     });
-    
+
     const navObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -133,7 +133,7 @@ function main() {
       });
     }, { rootMargin: "-40% 0px -60% 0px" });
     elements.allSections.forEach(section => navObserver.observe(section));
-    
+
     elements.spotlightCards.forEach(card => {
       card.addEventListener("mousemove", e => {
         const rect = card.getBoundingClientRect();
@@ -150,8 +150,14 @@ function main() {
         elements.gradientsContainer.style.transform = `translate(${-x * 30}px, ${-y * 30}px)`;
       });
     }
+
+    window.addEventListener("mousemove", e => {
+      document.documentElement.style.setProperty('--mouse-x', e.clientX + 'px');
+      document.documentElement.style.setProperty('--mouse-y', e.clientY + 'px');
+    });
+
   };
-  
+
   /**
    * Initializes all contact form functionality.
    */
@@ -179,15 +185,15 @@ function main() {
         }
       }, { threshold: 0.6 }).observe(elements.contactSection);
     }
-    
+
     const requiredInputs = elements.contactForm.querySelectorAll("[required]");
     const validateInput = input => {
-        const formGroup = input.closest(".form-group");
-        const errorEl = formGroup.querySelector(".error-message");
-        const isValid = input.checkValidity();
-        formGroup.classList.toggle("invalid", !isValid);
-        if (errorEl) errorEl.textContent = input.validationMessage;
-        return isValid;
+      const formGroup = input.closest(".form-group");
+      const errorEl = formGroup.querySelector(".error-message");
+      const isValid = input.checkValidity();
+      formGroup.classList.toggle("invalid", !isValid);
+      if (errorEl) errorEl.textContent = input.validationMessage;
+      return isValid;
     };
 
     elements.contactForm.addEventListener("submit", e => {
@@ -205,16 +211,18 @@ function main() {
    */
   const initAnalytics = () => {
     if (elements.emailTrackButton) {
-        elements.emailTrackButton.addEventListener("click", () => {
-            const trackUrl = "/track_click/?action=EMAIL_CLICK";
-            if (navigator.sendBeacon) {
-                navigator.sendBeacon(trackUrl);
-            } else {
-                fetch(trackUrl, { method: "GET", keepalive: true });
-            }
-        });
+      elements.emailTrackButton.addEventListener("click", () => {
+        const trackUrl = "/track_click/?action=EMAIL_CLICK";
+        if (navigator.sendBeacon) {
+          navigator.sendBeacon(trackUrl);
+        } else {
+          fetch(trackUrl, { method: "GET", keepalive: true });
+        }
+      });
     }
+
   };
+
 
   // Run all initialization modules
   initNavigation();

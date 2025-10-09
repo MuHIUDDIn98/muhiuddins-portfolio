@@ -20,6 +20,11 @@
   --transition-medium: 0.4s ease;
   --transition-slow: 0.6s ease;
 }
+@property --angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
 
 /* =================================================================
    2. GLOBAL STYLES & RESET
@@ -1024,36 +1029,40 @@ nav.scrolled {
   border-color: #ef4444;
   box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
 }
+
+/* --- NEW GLOWING PULSE BORDER BUTTON --- */
 .button-group {
   display: flex;
   justify-content: flex-end;
 }
-.btn-contact-submit {
-  background: transparent;
-  border: 2px solid var(--border-color);
-  color: var(--text-primary);
+
+.button-group {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-glow-border {
   padding: 0.8rem 1.8rem;
-  font-weight: 600;
+  color: var(--text-primary);
+  background: var(--accent-gradient); /* USES THE PRIMARY GRADIENT */
+  background-size: 200% auto; /* For hover effect */
+  border: none;
   border-radius: 8px;
+  font-weight: 600;
   cursor: pointer;
   position: relative;
-  overflow: hidden;
-  transition: color 0.4s ease;
+  z-index: 1;
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+  transition: all var(--transition-medium);
 }
-.btn-contact-submit::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: var(--accent-gradient);
-  z-index: -1;
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.4s cubic-bezier(0.7, 0, 0.3, 1);
+
+.btn-glow-border:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(99, 102, 241, 0.6);
+  background-position: right center; /* Changes gradient direction on hover */
 }
-.btn-contact-submit:hover::before {
-  transform: scaleX(1);
-}
-.btn-contact-submit:active {
+
+.btn-glow-border:active {
   animation: button-glitch 0.2s linear;
 }
 .contact-success {
@@ -1564,5 +1573,11 @@ footer {
   }
   .contact-form {
     grid-template-columns: 1fr;
+  }
+}
+
+@keyframes spin {
+  to {
+    --angle: 210deg;
   }
 }

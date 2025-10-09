@@ -1,4 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
+from django.contrib import messages # ADD THIS IMPORT
+from .forms import ContactForm # ADD THIS IMPORT
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import (
     GeneralInfo,
@@ -23,6 +25,19 @@ def get_ip_address(request):
 
 # --- Main view for displaying the portfolio page ---
 def portfolio_view(request):
+    # --- ADD THIS FORM HANDLING LOGIC ---
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Thank you for your message! I will get back to you soon.')
+            return redirect('portfolio') # Redirect to the same page
+        else:
+            messages.error(request, 'There was an error with your submission. Please check the form and try again.')
+    else:
+        form = ContactForm()
+    # --- END OF ADDED LOGIC ---
+
     general_info = GeneralInfo.objects.first()
     skill_categories = SkillCategory.objects.prefetch_related('skills').all()
     expertises = Expertise.objects.all()
@@ -31,6 +46,7 @@ def portfolio_view(request):
     social_links = SocialLink.objects.all()
 
     context = {
+        'form': form, # ADD THE FORM TO THE CONTEXT
         'info': general_info,
         'skill_categories': skill_categories,
         'expertises': expertises,

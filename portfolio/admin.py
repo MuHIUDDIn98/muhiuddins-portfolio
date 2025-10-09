@@ -4,7 +4,7 @@ from django.urls import reverse
 from .models import ClickEvent 
 from .models import (
     GeneralInfo, SkillCategory, Skill, Expertise,
-    ProjectCategory, Tag, Project, SocialLink
+    ProjectCategory, Tag, Project, SocialLink,ContactSubmission
 )
 
 # Use inline for a better editing experience when inside a Category
@@ -61,7 +61,20 @@ class ClickEventAdmin(admin.ModelAdmin):
     def has_change_permission(self, request, obj=None):
         return False
 
-    
+
+@admin.register(ContactSubmission)
+class ContactSubmissionAdmin(admin.ModelAdmin):
+    list_display = ('name', 'email', 'subject', 'timestamp')
+    list_filter = ('timestamp',)
+    search_fields = ('name', 'email', 'subject', 'message')
+    readonly_fields = ('name', 'email', 'subject', 'message', 'timestamp')
+
+    def has_add_permission(self, request):
+        return False # Disable adding submissions from the admin
+
+    def has_change_permission(self, request, obj=None):
+        return False # Disable editing submissions
+   
 # Register the rest of the models
 admin.site.register(GeneralInfo)
 admin.site.register(Expertise)

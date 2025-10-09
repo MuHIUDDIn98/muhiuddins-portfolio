@@ -136,3 +136,19 @@ class ClickEvent(models.Model):
 
     def __str__(self):
         return f'{self.get_action_type_display()} at {self.timestamp.strftime("%Y-%m-%d %H:%M")}'
+    
+
+class ContactSubmission(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    subject = models.CharField(max_length=200)
+    message = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = "Contact Submission"
+        verbose_name_plural = "Contact Submissions"
+        ordering = ['-timestamp']
+
+    def __str__(self):
+        return f'Message from {self.name} ({self.email})'

@@ -1,5 +1,12 @@
+# portfolio/models.py
+
+import logging  # 1. Import the logging library
 from django.db import models
 from django.utils.text import slugify
+
+# 2. Get an instance of the logger for this file
+logger = logging.getLogger(__name__)
+
 
 # --- General Site Information (Singleton Model) ---
 class GeneralInfo(models.Model):
@@ -30,6 +37,25 @@ class GeneralInfo(models.Model):
     contact_email = models.EmailField(default="youremail@example.com")
     footer_text = models.CharField(max_length=100, default="Designed & Built by Your Name")
 
+    # 3. ADDED: Overridden save method with error logging for file uploads
+    def save(self, *args, **kwargs):
+        original = None
+        if self.pk:
+            try:
+                original = GeneralInfo.objects.get(pk=self.pk)
+            except GeneralInfo.DoesNotExist:
+                pass
+
+        try:
+            super().save(*args, **kwargs)
+            if (original is None or self.resume != original.resume) and self.resume:
+                logger.info(f"SUCCESS: Resume '{self.resume.name}' uploaded to Cloudinary.")
+            if (original is None or self.about_image != original.about_image) and self.about_image:
+                logger.info(f"SUCCESS: Image '{self.about_image.name}' uploaded to Cloudinary.")
+        except Exception as e:
+            logger.error(f"CRITICAL: Failed to upload file for GeneralInfo. Error: {e}")
+            raise
+
     def __str__(self):
         return "General Site Information"
 
@@ -53,14 +79,12 @@ class SkillCategory(models.Model):
 class Skill(models.Model):
     category = models.ForeignKey(SkillCategory, related_name='skills', on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
-    # CHANGED
     svg_icon_code = models.TextField(blank=True, null=True, help_text="Paste the full SVG code for the icon.")
 
     def __str__(self):
         return f"{self.name} ({self.category.name})"
 
 class Expertise(models.Model):
-    # CHANGED
     svg_icon_code = models.TextField(blank=True, null=True, help_text="Paste the full SVG code for the icon.")
     title = models.CharField(max_length=100)
     description = models.TextField()
@@ -68,11 +92,12 @@ class Expertise(models.Model):
     def __str__(self):
         return self.title
 
+
 # --- Projects Section ---
 class ProjectCategory(models.Model):
     name = models.CharField(max_length=100, unique=True)
     slug = models.SlugField(max_length=100, unique=True, blank=True, help_text="URL-friendly version of the name. Auto-generated if left blank.")
-    
+
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.name)
@@ -80,7 +105,7 @@ class ProjectCategory(models.Model):
 
     def __str__(self):
         return self.name
-    
+
     class Meta:
         verbose_name_plural = "Project Categories"
 
@@ -101,6 +126,23 @@ class Project(models.Model):
     categories = models.ManyToManyField(ProjectCategory, related_name='projects')
     tags = models.ManyToManyField(Tag, related_name='projects')
 
+    # 4. ADDED: Overridden save method with error logging for image uploads
+    def save(self, *args, **kwargs):
+        original = None
+        if self.pk:
+            try:
+                original = Project.objects.get(pk=self.pk)
+            except Project.DoesNotExist:
+                pass
+
+        try:
+            super().save(*args, **kwargs)
+            if (original is None or self.image != original.image) and self.image:
+                logger.info(f"SUCCESS: Project image for '{self.title}' uploaded to Cloudinary.")
+        except Exception as e:
+            logger.error(f"CRITICAL: Failed to upload project image for '{self.title}'. Error: {e}")
+            raise
+
     def __str__(self):
         return self.title
 
@@ -108,7 +150,6 @@ class Project(models.Model):
 # --- Contact Section ---
 class SocialLink(models.Model):
     platform_name = models.CharField(max_length=50, help_text="e.g., GitHub, LinkedIn")
-    # CHANGED
     svg_icon_code = models.TextField(blank=True, null=True, help_text="Paste the SVG code from Simple Icons.")
     link = models.URLField()
 
@@ -136,7 +177,7 @@ class ClickEvent(models.Model):
 
     def __str__(self):
         return f'{self.get_action_type_display()} at {self.timestamp.strftime("%Y-%m-%d %H:%M")}'
-    
+
 
 class ContactSubmission(models.Model):
     name = models.CharField(max_length=100)

@@ -123,3 +123,36 @@ CLOUDINARY_STORAGE = {
 }
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# =============================================================================
+# LOGGING CONFIGURATION
+# =============================================================================
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': 'INFO', # Captures important Django-internal logs
+            'propagate': True,
+        },
+        'portfolio': { # A logger for your specific app
+            'handlers': ['console'],
+            'level': 'DEBUG', # Set to DEBUG to capture all levels of logs from your app
+            'propagate': True,
+        },
+    },
+}

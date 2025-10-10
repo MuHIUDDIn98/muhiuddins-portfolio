@@ -1,6 +1,9 @@
-from django.shortcuts import render,redirect
-from django.contrib import messages # ADD THIS IMPORT
-from .forms import ContactForm # ADD THIS IMPORT
+# portfolio/views.py
+
+import logging  # 1. Import the logging library
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from .forms import ContactForm
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import (
     GeneralInfo,
@@ -8,9 +11,13 @@ from .models import (
     Expertise,
     ProjectCategory,
     Project,
-    SocialLink,  
-    ClickEvent  
+    SocialLink,
+    ClickEvent
 )
+
+# 2. Get an instance of the logger for this file
+logger = logging.getLogger(__name__)
+
 
 # --- Helper function to get the real IP address ---
 def get_ip_address(request):
@@ -25,18 +32,20 @@ def get_ip_address(request):
 
 # --- Main view for displaying the portfolio page ---
 def portfolio_view(request):
-    # --- ADD THIS FORM HANDLING LOGIC ---
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
+            # 3. Add success logging
+            logger.info(f"New contact form submission from {form.cleaned_data.get('email')}")
             form.save()
             messages.success(request, 'Thank you for your message! I will get back to you soon.')
-            return redirect('portfolio') # Redirect to the same page
+            return redirect('portfolio')
         else:
+            # 4. Add error logging for form validation failures
+            logger.error(f"Contact form submission failed. Errors: {form.errors.as_json()}")
             messages.error(request, 'There was an error with your submission. Please check the form and try again.')
     else:
         form = ContactForm()
-    # --- END OF ADDED LOGIC ---
 
     general_info = GeneralInfo.objects.first()
     skill_categories = SkillCategory.objects.prefetch_related('skills').all()
@@ -46,7 +55,7 @@ def portfolio_view(request):
     social_links = SocialLink.objects.all()
 
     context = {
-        'form': form, # ADD THE FORM TO THE CONTEXT
+        'form': form,
         'info': general_info,
         'skill_categories': skill_categories,
         'expertises': expertises,
@@ -61,28 +70,29 @@ def portfolio_view(request):
 def track_click(request):
     action = request.GET.get('action')
     redirect_url = request.GET.get('redirect_url')
-    details_param = request.GET.get('details') # Use a different name to avoid confusion
+    details_param = request.GET.get('details')
 
     project_instance = None
-    # If the click is project-related, try to find the project object
     if action in ['PROJECT_LIVE_DEMO', 'PROJECT_GITHUB'] and details_param:
         try:
-            # We expect 'details_param' to be the project's ID
             project_instance = Project.objects.get(pk=int(details_param))
         except (Project.DoesNotExist, ValueError):
-            # If the ID is invalid or project doesn't exist, we just ignore it
+            # 5. Add warning log for non-critical errors
+            logger.warning(f"Could not find project with ID '{details_param}' for click tracking.")
             project_instance = None
 
     if action:
+        # 6. Add info logging for tracking events
+        logger.info(f"Tracking click event. Action: {action}, Details: {details_param}, IP: {get_ip_address(request)}")
         ClickEvent.objects.create(
             action_type=action,
             ip_address=get_ip_address(request),
             user_agent=request.META.get('HTTP_USER_AGENT', ''),
-            project=project_instance,  # Save the linked project object here
+            project=project_instance,
             details=f"Project ID: {details_param}" if project_instance else details_param
         )
-    
+
     if redirect_url:
         return HttpResponseRedirect(redirect_url)
-    
+
     return HttpResponse(status=204)

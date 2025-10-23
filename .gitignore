@@ -4,7 +4,6 @@ __pycache__/
 
 # Django
 *.log
-db.sqlite3
 media/
 staticfiles/
 
@@ -12,3 +11,9 @@ staticfiles/
 venv/
 PVE/
 .env
+
+production.env
+db.sqlite3
+/media/
+__pycache__/
+.vscode/

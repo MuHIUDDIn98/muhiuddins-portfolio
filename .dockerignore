@@ -1,0 +1,9 @@
+.git/
+.gitignore
+.env
+production.env
+db.sqlite3
+media/
+staticfiles/
+__pycache__/
+.vscode/

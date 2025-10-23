@@ -1,0 +1,8 @@
+Django
+djangorestframework
+gunicorn
+psycopg2-binary
+gunicorn
+python-dotenv
+dj-database-url
+Pillow

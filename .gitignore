@@ -1,6 +1,7 @@
 # Python
 __pycache__/
 *.pyc
+*.pyo
 
 # Django
 *.log
@@ -12,3 +13,13 @@ staticfiles/
 venv/
 PVE/
 .env
+.env
+.env.*
+
+# Build artifacts
+staticfiles/
+mediafiles/
+
+# OS
+.DS_Store
+Thumbs.db

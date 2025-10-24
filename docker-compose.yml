@@ -1,0 +1,60 @@
+# /srv/portfolio/docker-compose.yml
+# ---
+services:
+  # --- Your Django App ---
+  app:
+    build: . # Build the Dockerfile in this directory
+    container_name: "portfolio-tenant"
+    restart: unless-stopped
+    env_file:
+      - .env # Use variables from .env
+    environment:
+      # These variables are passed to the container
+      - SECRET_KEY=${SECRET_KEY}
+      - PORTFOLIO_DOMAINS=${PORTFOLIO_DOMAINS}
+      # Construct the DATABASE_URL from .env variables
+      - DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
+    volumes:
+      # Mount a volume for user-uploaded media files
+      - media_volume:/app/mediafiles
+    networks:
+      - webnet     # Public network for Traefik
+      - internal   # Private network for DB
+    depends_on:
+      - db         # Wait for db to be "ready"
+    labels:
+      # --- Traefik Labels ---
+      - "traefik.enable=true"
+      - "traefik.http.routers.portfolio.rule=Host(`${PORTFOLIO_DOMAIN}`) || Host(`www.${PORTFOLIO_DOMAIN}`)"
+      - "traefik.http.routers.portfolio.entrypoints=websecure"
+      - "traefik.http.routers.portfolio.tls.certresolver=myresolver"
+      # Point Traefik to the Gunicorn port (8000) inside the container
+      - "traefik.http.services.portfolio.loadbalancer.server.port=8000"
+
+  # --- PostgreSQL Database ---
+  db:
+    image: postgres:15-alpine
+    container_name: "portfolio-db"
+    restart: unless-stopped
+    env_file:
+      - .env # Use variables from .env
+    environment:
+      # These are used by the postgres image to create the DB
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - internal # Only on the internal network
+
+networks:
+  webnet:
+    external: true # Connect to Traefik's network
+    name: webnet
+  internal:
+    external: false # Create a new, private network
+
+volumes:
+  db_data:        # Persists database data
+  media_volume:   # Persists user-uploaded files

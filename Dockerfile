@@ -42,12 +42,13 @@ RUN pip install --no-cache /wheels/*
 # Set work directory
 WORKDIR /app
 
-# Copy the entrypoint script
-COPY ./docker-entrypoint.sh /app/
-RUN chmod +x /app/docker-entrypoint.sh
-
-# Copy the entire project
+# --- UPDATED SECTION ---
+# 1. Copy the entire project first
 COPY . .
+
+# 2. NOW, set the execute permission on the script
+RUN chmod +x /app/docker-entrypoint.sh
+# --- END UPDATE ---
 
 # Change ownership to the non-root user
 RUN chown -R app:app /app

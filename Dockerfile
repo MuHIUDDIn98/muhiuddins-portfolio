@@ -32,7 +32,7 @@ RUN addgroup --system app && adduser --system --group app
 RUN apt-get update && apt-get install -y --no-install-recommends \
     libpq5 \
     netcat-traditional \
-    gosu && \ # <-- MODIFICATION: Added 'gosu' to install
+    gosu && \
     apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false && \
     rm -rf /var/lib/apt/lists/*
 

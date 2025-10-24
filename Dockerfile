@@ -31,7 +31,8 @@ RUN addgroup --system app && adduser --system --group app
 # Install production system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
     libpq5 \
-    netcat-traditional && \
+    netcat-traditional \
+    gosu && \ # <-- MODIFICATION: Added 'gosu' to install
     apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false && \
     rm -rf /var/lib/apt/lists/*
 
@@ -42,19 +43,22 @@ RUN pip install --no-cache /wheels/*
 # Set work directory
 WORKDIR /app
 
-# --- UPDATED SECTION ---
 # 1. Copy the entire project first
 COPY . .
 
 # 2. NOW, set the execute permission on the script
 RUN chmod +x /app/docker-entrypoint.sh
-# --- END UPDATE ---
 
 # Change ownership to the non-root user
+# This sets ownership for /app, but mounted volumes will still be root
 RUN chown -R app:app /app
 
-# Switch to the non-root user
-USER app
+# --- MODIFICATION ---
+# We REMOVE the "USER app" line.
+# The entrypoint will now run as ROOT by default.
+# This is necessary so the script can 'chown' the mounted volumes.
+# # USER app  <-- This line has been removed.
+# --- END MODIFICATION ---
 
 # This entrypoint script will run migrations and start gunicorn
 ENTRYPOINT ["/app/docker-entrypoint.sh"]

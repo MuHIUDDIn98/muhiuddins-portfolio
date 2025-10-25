@@ -10,7 +10,6 @@ staticfiles/
 # Environment
 venv/
 PVE/
-.env
 
 production.env
 db.sqlite3
